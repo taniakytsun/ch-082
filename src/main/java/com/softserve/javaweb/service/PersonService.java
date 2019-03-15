@@ -135,7 +135,7 @@ public class PersonService {
 		break;
 	}
 	if (validate(person, validator)) {
-	    personDAO.addPerson(person);
+	   // personDAO.addPerson(person);
 	    this.persons.add(person);
 	}
 	return person;
@@ -197,4 +197,6 @@ public class PersonService {
 	    logger.log(Level.SEVERE, "Something went wrong..", e);
 	}
     }
+
+
 }
