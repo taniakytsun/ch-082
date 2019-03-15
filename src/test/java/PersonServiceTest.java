@@ -23,6 +23,7 @@ public class PersonServiceTest {
         experiences.add(experience2);
         Person person = new Person(104, "TetianaTsanJSON", 22, LocalDate.parse("1997-02-25"),
                 "Chernivtsi city, Russka street", "taniakytsun@gmail.com", "(097)5395051", "Java", experiences);
+
         return new Person[] { person };
     }
 
