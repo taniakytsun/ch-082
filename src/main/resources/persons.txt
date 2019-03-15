@@ -1,0 +1,19 @@
+name: Tetiana TsanTXT
+age: 22
+birthDay: 1997-02-25
+address: Chernivtsi
+email: taniakytsun@gmail.com
+phoneNumber: (097)5395051
+specialization: Java
+experience1: 
+ place: CHNU
+ dateFrom: 2018-06-10
+ dateTo: 2019-02-28
+experience2: 
+ place: SoftServe 
+ dateFrom: 2019-06-02
+ dateTo: 2019-09-18
+ 
+{"name":"TetianaTsanJSON","birthDay":"1997-02-25","age":22,"address":"Chernivtsi city, Russka street","email":"taniakytsun@gmail.com","phoneNumber":"(097)5395051","specialization":"Java","experience":[{"place":"Yuriy Fedkovych Chernivtsi National University","dateFrom":"2018-06-10","dateTo":"2019-02-28"},{"place":"SoftServe ","dateFrom":"2019-06-02","dateTo":"2019-09-18"}]}
+
+<Person><name>TetianaTsanXML</name><birthDay>1997-02-25</birthDay><age>22</age><address>Chernivtsi city, Russka street</address><email>taniakytsun@gmail.com</email><phoneNumber>(097)5395051</phoneNumber><specialization>Java</specialization><experience><experience><place>Yuriy Fedkovych Chernivtsi National University</place><dateFrom>2018-06-10</dateFrom><dateTo>2019-02-28</dateTo></experience><experience><place>SoftServe </place><dateFrom>2019-06-02</dateFrom><dateTo>2019-09-18</dateTo></experience></experience></Person>

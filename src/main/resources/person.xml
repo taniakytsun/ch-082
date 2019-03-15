@@ -1,0 +1,2 @@
+
+<Person><name>TetianaTsanXML</name><birthDay>1997-02-25</birthDay><age>22</age><address>Chernivtsi city, Russka street</address><email>taniakytsun@gmail.com</email><phoneNumber>(097)5395051</phoneNumber><specialization>Java</specialization><experience><experience><place>Yuriy Fedkovych Chernivtsi National University</place><dateFrom>2018-06-10</dateFrom><dateTo>2019-02-28</dateTo></experience><experience><place>SoftServe </place><dateFrom>2019-06-02</dateFrom><dateTo>2019-09-18</dateTo></experience></experience></Person>
