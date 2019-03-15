@@ -3,7 +3,6 @@ package com.softserve.javaweb.DAO;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,32 +13,32 @@ import com.softserve.javaweb.web.DataBaseConnection;
 
 public class PersonDAO {
 
-    String name = "name";
-    String age = "age";
-    String birthDay = "birthday";
-    String address = "address";
-    String email = "email";
-    String phoneNumber = "phonenumber";
-    String specialization = "specialization";
+    private String name = "name";
+    private String age = "age";
+    private String birthDay = "birthday";
+    private String address = "address";
+    private String email = "email";
+    private String phoneNumber = "phonenumber";
+    private String specialization = "specialization";
 
-    Person person = new Person();
-    Statement stmnt = null;
-    ResultSet rs = null;
+    private Person person = new Person();
+    private Statement statement = null;
+    private ResultSet rs = null;
     private static Logger logger = Logger.getLogger(PersonDAO.class.getName());
-    Connection connection = new DataBaseConnection().connect();
-    PreparedStatement preparedStatement = null;
+    private Connection connection = new DataBaseConnection().connect();
+    private PreparedStatement preparedStatement = null;
 
     public void addPerson(Person person) throws SQLException {
 
         Long id = 0L;
         try {
-            stmnt = connection.createStatement();
+            statement = connection.createStatement();
             String query = "INSERT INTO person (name,age,birthday,address,email,phonenumber,specialization) "
                     + "VALUES " + "(" + "\'" + person.getName() + "\', '" + person.getAge() + "', '"
                     + person.getBirthDay() + "', '" + person.getAddress() + "', '" + person.getEmail() + "', '"
                     + person.getPhoneNumber() + "', '" + person.getSpecialization() + "')";
-            stmnt.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
-            rs = stmnt.getGeneratedKeys();
+            statement.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
+            rs = statement.getGeneratedKeys();
             if (rs.next()) {
                 id = rs.getLong("idperson");
             }
@@ -47,7 +46,7 @@ public class PersonDAO {
         } catch (SQLException e) {
             logger.log(Level.WARNING, e.getMessage());
         } finally {
-            stmnt.close();
+            statement.close();
             rs.close();
         }
     }
@@ -55,21 +54,21 @@ public class PersonDAO {
     public void addExperienceToPerson(Long idPerson, String place, LocalDate dateFrom, LocalDate dateTo)
             throws SQLException {
         try {
-            stmnt = connection.createStatement();
+            statement = connection.createStatement();
             String query = "INSERT INTO experience (place,datefrom,dateto,idperson) " + "VALUES " + "(" + "\'" + place
                     + "\', '" + dateFrom + "', '" + dateTo + "', '" + idPerson + "')";
-            stmnt.executeUpdate(query);
+            statement.executeUpdate(query);
         } catch (SQLException e) {
             logger.log(Level.CONFIG, e.getMessage());
         } finally {
-            stmnt.close();
+            statement.close();
         }
     }
 
     public void updatePerson(Long personId) throws SQLException {
 
         preparedStatement = connection.prepareStatement("UPDATE Person SET name=?, age=?, address=? email=? "
-                                                            +"phonenumber=? WHERE idperson="+ personId);
+                +"phonenumber=? WHERE idperson="+ personId);
         try {
             preparedStatement.setString(1, person.getName());
             preparedStatement.setInt(2, person.getAge());
@@ -86,9 +85,8 @@ public class PersonDAO {
 
     public Person getPersonByName(String name) throws SQLException {
         try {
-            stmnt = connection.createStatement();
-
-            rs = stmnt.executeQuery("SELECT * FROM person WHERE name LIKE" + name);
+            statement = connection.createStatement();
+            rs = statement.executeQuery("SELECT * FROM person WHERE name LIKE '"+name +"%'");
             while (rs.next()) {
                 setPersonFromResultSet(rs);
                 logger.log(Level.INFO, person.toString());
@@ -98,7 +96,7 @@ public class PersonDAO {
             logger.log(Level.WARNING, e.getMessage());
         } finally {
             rs.close();
-            stmnt.close();
+            statement.close();
         }
         return person;
     }
@@ -106,13 +104,13 @@ public class PersonDAO {
     public Person setPersonFromResultSet(ResultSet rs) {
 
         try {
-            person.setEmail(rs.getString(email));
-            person.setName(rs.getString(name));
-            person.setBirthDay(rs.getDate(birthDay).toLocalDate());
-            person.setAge(rs.getInt("age"));
-            person.setAddress(rs.getString(address));
-            person.setPhoneNumber(rs.getString(phoneNumber));
-            person.setSpecialization(rs.getString(specialization));
+            person.setEmail(rs.getString(this.email));
+            person.setName(rs.getString(this.name));
+            person.setBirthDay(rs.getDate(this.birthDay).toLocalDate());
+            person.setAge(rs.getInt(this.age));
+            person.setAddress(rs.getString(this.address));
+            person.setPhoneNumber(rs.getString(this.phoneNumber));
+            person.setSpecialization(rs.getString(this.specialization));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -123,8 +121,8 @@ public class PersonDAO {
 
         List<Person> persons = new ArrayList<>();
         try {
-            stmnt = connection.createStatement();
-            rs = stmnt.executeQuery("Select * from person");
+            statement = connection.createStatement();
+            rs = statement.executeQuery("Select * from person");
             while (rs.next()) {
                 setPersonFromResultSet(rs);
                 logger.log(Level.INFO, person.toString());
@@ -134,17 +132,17 @@ public class PersonDAO {
             logger.log(Level.WARNING, e.getMessage());
         } finally {
             rs.close();
-            stmnt.close();
+            statement.close();
         }
         return persons;
     }
 
     public void getPersonWithExperience() throws SQLException {
         try {
-            stmnt = connection.createStatement();
+            statement = connection.createStatement();
 
-            rs = stmnt.executeQuery("SELECT p.*, e.place, e.datefrom, e.dateto \n" +
-                    "FROM person AS p \n" +
+            rs = statement.executeQuery("SELECT p.*, e.place, e.datefrom, e.dateto \n" +
+                    "FROM person AS  p \n" +
                     "JOIN experience AS e ON \n" +
                     "p.idperson = e.idperson \n" +
                     "WHERE p.name = 'Oksana Odochuk'");
@@ -163,7 +161,7 @@ public class PersonDAO {
             logger.log(Level.WARNING, e.getMessage());
         } finally {
             rs.close();
-            stmnt.close();
+            statement.close();
         }
     }
 
@@ -180,7 +178,7 @@ public class PersonDAO {
             logger.log(Level.WARNING, e.getMessage());
         } finally {
             rs.close();
-            stmnt.close();
+            statement.close();
         }
     }
 
@@ -196,15 +194,15 @@ public class PersonDAO {
             logger.log(Level.WARNING, e.getMessage());
         } finally {
             rs.close();
-            stmnt.close();
+            statement.close();
         }
     }
 
     public void deleteExperienceByPersonId(Long personId, Long experienceId) throws SQLException {
         try {
-            preparedStatement = connection.prepareStatement("DELETE FROM experience WHERE idperson = ? AND idexperience = 2");
+            preparedStatement = connection.prepareStatement("DELETE FROM experience WHERE idperson = ? AND idexperience = ?");
             preparedStatement.setLong(1, personId);
-            preparedStatement.setLong(1, experienceId);
+            preparedStatement.setLong(2, experienceId);
             int deleted = preparedStatement.executeUpdate();
             if (deleted > 0) {
                 logger.info("Successful deleted experience!");
@@ -213,7 +211,7 @@ public class PersonDAO {
             logger.log(Level.WARNING, e.getMessage());
         } finally {
             rs.close();
-            stmnt.close();
+            statement.close();
         }
     }
 }
