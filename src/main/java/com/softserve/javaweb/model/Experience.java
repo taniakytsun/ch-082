@@ -11,6 +11,7 @@ import com.softserve.javaweb.service.LocalDateSerializer;
 
 public class Experience {
 
+	private Long id;
 	private String place;
 	@JsonDeserialize(using = LocalDateDeserializer.class)
 	@JsonSerialize(using = LocalDateSerializer.class)
@@ -23,10 +24,28 @@ public class Experience {
 	}
 
 	public Experience(String place, LocalDate dateFrom, LocalDate dateTo) {
-		super();
 		this.place = place;
 		this.dateFrom = dateFrom;
 		this.dateTo = dateTo;
+	}
+
+	public Experience(Long id) {
+		this.id = id;
+	}
+
+	public Experience(Long id, String place, LocalDate dateFrom, LocalDate dateTo) {
+		this.id = id;
+		this.place = place;
+		this.dateFrom = dateFrom;
+		this.dateTo = dateTo;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getPlace() {
