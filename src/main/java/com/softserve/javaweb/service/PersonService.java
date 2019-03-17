@@ -35,7 +35,6 @@ public class PersonService {
 
     ObjectMapper mapper = new ObjectMapper();
     ObjectMapper xmlMapper = new ObjectMapper(new XmlFactory());
-    PersonDAO personDAO = new PersonDAO();
 
     private static Logger logger = Logger.getLogger(PersonService.class.getName());
     List<Person> persons = new ArrayList<>();
@@ -54,12 +53,18 @@ public class PersonService {
         }
     }
 
-    public Person parseFileToObjects(String fileName) throws IOException, SQLException {
+    public String openFile(String fileName) throws IOException {
 
-        Person person = new Person.Builder().build();
         FileReader fr = new FileReader(fileName);
         br = new BufferedReader(fr);
         String line = br.readLine();
+        return line;
+    }
+
+    public Person parseFileToObjects(String fileName) throws IOException, SQLException {
+
+        Person person = new Person.Builder().build();
+        String line = openFile(fileName);
 
         while (line != null) {
 
@@ -72,7 +77,7 @@ public class PersonService {
                 break;
             }
             if (line.indexOf("name:") != -1) {
-               person =  parsePersonFromTXT(line);
+                person = parsePersonFromTXT(line);
                 if (validate(person, validator)) {
                     this.persons.add(person);
                 }
@@ -82,8 +87,9 @@ public class PersonService {
         return person;
     }
 
-    public Person parsePersonFromTXT(String line) throws IOException, SQLException {
+    public Person parsePersonFromTXT(String fileName) throws IOException, SQLException {
 
+        String line = openFile(fileName);
         String name = null;
         int age = 0;
         LocalDate birthDay = null;
@@ -91,7 +97,7 @@ public class PersonService {
         String email = null;
         String phoneNumber = null;
         String specialization = null;
-        List<Experience> experiences = null;
+        List<Experience> experiences = new ArrayList<>();
 
         while (line != null) {
             if (line.contains("name:")) {
@@ -121,16 +127,12 @@ public class PersonService {
             if (line.contains("specialization:")) {
                 specialization = line.substring(line.indexOf(':') + 2);
                 line = br.readLine();
-            }
-
-            if (line.startsWith("experience")) {
-                line = br.readLine();
-                experiences = new ArrayList<>();
-                Experience experience = new Experience();
-                experience = parseExperienceFromTXT(line, experience);
-                experiences.add(experience);
-            } else
+            }else
                 break;
+        }
+        if ((line!=null) &&(line.contains("experience"))) {
+            line = br.readLine();
+            experiences = parseExperienceFromTXT(line);
         }
         Person person = new Person.Builder()
                 .withName(name)
@@ -146,8 +148,14 @@ public class PersonService {
     }
 
 
-    public Experience parseExperienceFromTXT(String line, Experience experience) throws IOException {
+    public List<Experience> parseExperienceFromTXT(String line) throws IOException {
+        List <Experience> experiences = new ArrayList<>();
+
         while (line != null) {
+            Experience experience = new Experience();
+            if (line.contains("experience")){
+                line = br.readLine();
+            }
             if (line.contains("place:")) {
                 experience.setPlace(line.substring(line.indexOf(':') + 2));
                 line = br.readLine();
@@ -161,19 +169,16 @@ public class PersonService {
                 line = br.readLine();
             } else
                 break;
-        }
-        return experience;
+            experiences.add(experience); }
+        return experiences;
     }
+
     public Person parsePersonFromJSON(String fileName) throws SQLException {
 
         Person person = new Person.Builder().build();
         try {
             byte[] jsonData = Files.readAllBytes(Paths.get(fileName));
             person = mapper.readValue(jsonData, Person.class);
-            if (validate(person, validator)) {
-                personDAO.addPerson(person);
-                this.persons.add(person);
-            }
         } catch (IOException e) {
             logger.log(Level.SEVERE, "Can't read JSON", e);
         }
@@ -186,25 +191,22 @@ public class PersonService {
         try {
             byte[] xmlData = Files.readAllBytes(Paths.get(fileName));
             person = xmlMapper.readValue(xmlData, Person.class);
-            if (validate(person, validator)) {
-                personDAO.addPerson(person);
-                this.persons.add(person);
-            }
         } catch (IOException e) {
             logger.log(Level.SEVERE, "Can't read XML", e);
         }
         return person;
     }
 
-    public void exportYaml(String fileName, List<Person> persons) throws IOException {
+    public String exportYaml(String fileName, List<Person> persons) throws IOException {
         ObjectMapper mapperYAML = new ObjectMapper(new YAMLFactory());
         File file = new File(fileName);
+        String execute = "Something went wrong!";
         try {
             mapperYAML.writeValue(file, persons);
+            execute = "Successful!";
         } catch (JsonGenerationException e) {
             logger.log(Level.SEVERE, "Something went wrong..", e);
         }
+        return execute;
     }
-
-
 }
