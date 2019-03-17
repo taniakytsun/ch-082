@@ -25,7 +25,7 @@ public class PersonDAO {
     private static String updatePerson = ("UPDATE person SET name = ?, age = ?, address = ?, email = ?, phonenumber = ? " +
             "WHERE idperson = ?");
     private static String deletePersonById = "DELETE FROM person WHERE idperson = ?";
-    private static String getPersonByName = "SELECT * FROM person WHERE name LIKE ?'%'";
+    private static String getPersonLikeName = "SELECT * FROM person WHERE name LIKE ?'%'";
     private static String getAllPersonsWithoutExperience = "Select * from person";
     private static String getAllPersonsWithExperience = "SELECT p.name, array_agg(e.place) AS experiences \n" +
             "FROM \n" +
@@ -45,14 +45,9 @@ public class PersonDAO {
         preparedStatement.setString(5, person.getEmail());
         preparedStatement.setString(6, person.getPhoneNumber());
         preparedStatement.setString(7, person.getSpecialization());
-        resultSet = preparedStatement.getGeneratedKeys();
-        if (resultSet.next()) {
-            id = resultSet.getLong("idperson");
-        }
-        person.setId(id);
+
+        logger.info(response());
     }
-
-
 
     public void updatePerson(Person person) throws SQLException {
 
@@ -64,16 +59,13 @@ public class PersonDAO {
         preparedStatement.setString(5, person.getPhoneNumber());
         preparedStatement.setLong(6, person.getId());
 
-        int updated = preparedStatement.executeUpdate();
-        if (updated > 0) {
-            logger.info("An experience was updated successfully!");
-        }
+        logger.info(response());
     }
 
-    public Person getPersonByName(String name) throws SQLException {
+    public Person getPersonLikeName(String name) throws SQLException {
 
-        Person person = new Person();
-        preparedStatement = connection.getConnection().prepareStatement(getPersonByName);
+        Person person = new Person.Builder().build();
+        preparedStatement = connection.getConnection().prepareStatement(getPersonLikeName);
         preparedStatement.setString(1, name);
         resultSet = preparedStatement.getResultSet();
         while (resultSet.next()) {
@@ -86,13 +78,34 @@ public class PersonDAO {
     public Person getPersonFromResultSet(ResultSet rs, Person person) {
 
         try {
-            person.setEmail(rs.getString("email"));
-            person.setName(rs.getString("name"));
-            person.setBirthDay(rs.getDate("birthDay").toLocalDate());
-            person.setAge(rs.getInt("age"));
-            person.setAddress(rs.getString("address"));
-            person.setPhoneNumber(rs.getString("phoneNumber"));
-            person.setSpecialization(rs.getString("specialization"));
+            person = new Person.Builder()
+                    .withName(rs.getString("name"))
+                    .withEmail(rs.getString("email"))
+                    .withAge(rs.getInt("age"))
+                    .withBirthDay(rs.getDate("birthDay").toLocalDate())
+                    .withAddress(rs.getString("address"))
+                    .withPhoneNumber(rs.getString("phoneNumber"))
+                    .withSpecialization(rs.getString("specialization"))
+                    .build();
+        } catch (SQLException e) {
+            logger.log(Level.WARNING, e.getMessage());
+        }
+        return person;
+    }
+
+    public Person getPersonFromResultSet(ResultSet rs, Person person, List<Experience> experiences) {
+
+        try {
+            person = new Person.Builder()
+                    .withName(rs.getString("name"))
+                    .withEmail(rs.getString("email"))
+                    .withAge(rs.getInt("age"))
+                    .withBirthDay(rs.getDate("birthDay").toLocalDate())
+                    .withAddress(rs.getString("address"))
+                    .withPhoneNumber(rs.getString("phoneNumber"))
+                    .withSpecialization(rs.getString("specialization"))
+                    .withExperience(experiences)
+                    .build();
         } catch (SQLException e) {
             logger.log(Level.WARNING, e.getMessage());
         }
@@ -100,12 +113,10 @@ public class PersonDAO {
     }
 
 
-
-
     public List<Person> getAllPersonsWithoutExperience() throws SQLException {
 
         List<Person> persons = new ArrayList<>();
-        Person person = new Person();
+        Person person = new Person.Builder().build();
 
         preparedStatement = connection.getConnection().prepareStatement(getAllPersonsWithoutExperience);
         resultSet = preparedStatement.getResultSet();
@@ -125,18 +136,18 @@ public class PersonDAO {
 
         List<Person> persons = new ArrayList<>();
         List<Experience> experiences = new ArrayList<>();
-        Person person = new Person();
+        Person person = new Person.Builder().build();
         preparedStatement = connection.getConnection().prepareStatement(getAllPersonsWithExperience);
         resultSet = preparedStatement.getResultSet();
         while (resultSet.next()) {
             Experience experience = new Experience();
-            experienceDAO.getExperienceFromResultSet(resultSet,experience);
+            experienceDAO.getExperienceFromResultSet(resultSet, experience);
             experiences.add(experience);
-            getPersonFromResultSet(resultSet, person);
-            person.setExperience(experiences);
+            getPersonFromResultSet(resultSet, person, experiences);
+            persons.add(person);
         }
         try {
-            logger.info(objectMapper.writeValueAsString(experiences));
+            logger.info(objectMapper.writeValueAsString(persons));
         } catch (JsonProcessingException e) {
             logger.warning(e.getMessage());
         }
@@ -148,10 +159,14 @@ public class PersonDAO {
         experienceDAO.deleteAllExperienceByPersonId(id);
         preparedStatement = connection.getConnection().prepareStatement(deletePersonById);
         preparedStatement.setLong(1, id);
-        int deleted = preparedStatement.executeUpdate();
-        if (deleted > 0) {
-            logger.info("Successful deleted!");
-        }
+        logger.info(response());
     }
 
+    public String response() throws SQLException {
+        int result = preparedStatement.executeUpdate();
+        if (result > 0) {
+            return "Successfully!";
+        } else
+            return "Something went wrong!";
+    }
 }
