@@ -25,10 +25,10 @@ public class Person {
     @Size(min = 3, max = 50, message = "The \"Name\" field must have a length greater than 3 characters")
     private String name;
 
-	@Past(message = "Date of birth should be in the past!")
-	@JsonDeserialize(using = LocalDateDeserializer.class)
-	@JsonSerialize(using = LocalDateSerializer.class)
-	public LocalDate birthDay;
+    @Past(message = "Date of birth should be in the past!")
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
+    public LocalDate birthDay;
 
     private int age;
 
@@ -41,168 +41,146 @@ public class Person {
     private String specialization;
     private List<Experience> experience = new ArrayList<>();
 
-    public Person() {
+    private Person() {
 
     }
 
-    public Person(long id) {
-	this.id = id;
 
+    public long getId() {
+        return id;
     }
 
-    public Person(String name, int age, LocalDate birthDay, String address, String email, String phoneNumber,
-	    String specialization, List<Experience> experience) {
-	this.name = name;
-	this.age = age;
-	this.birthDay = birthDay;
-	this.address = address;
-	this.email = email;
-	this.phoneNumber = phoneNumber;
-	this.specialization = specialization;
-	this.experience = experience;
-    }
-
-    public Person(String name, LocalDate dateBirth, String specialization, List<Experience> experience) {
-	super();
-	this.name = name;
-	this.birthDay = dateBirth;
-	this.specialization = specialization;
-	this.experience = experience;
-    }
-
-    public Person(
-	    @Size(min = 3, max = 50, message = "The \"Name\" field must have a length greater than 3 characters") String name,
-	    @Past(message = "Date of birth should be in the past!") LocalDate birthDay, int age, String address,
-	    @Email(message = "Invalid email format") String email,
-	    @Pattern(regexp = "\\d{10}|(?:\\d{3}-){2}\\d{4}|\\(\\d{3}\\)\\d{3}-?\\d{4}", message = "Invalid phone number") String phoneNumber,
-	    String specialization) {
-	super();
-	this.name = name;
-	this.birthDay = birthDay;
-	this.age = age;
-	this.address = address;
-	this.email = email;
-	this.phoneNumber = phoneNumber;
-	this.specialization = specialization;
-    }
-
-	public Person(long id, @Size(min = 3, max = 50, message = "The \"Name\" field must have a length greater than 3 characters") String name,int age, @Past(message = "Date of birth should be in the past!") LocalDate birthDay,  String address, @Email(message = "Invalid email format") String email, @Pattern(regexp = "\\d{10}|(?:\\d{3}-){2}\\d{4}|\\(\\d{3}\\)\\d{3}-?\\d{4}", message = "Invalid phone number") String phoneNumber, String specialization, List<Experience> experience) {
-		this.id = id;
-		this.name = name;
-		this.birthDay = birthDay;
-		this.age = age;
-		this.address = address;
-		this.email = email;
-		this.phoneNumber = phoneNumber;
-		this.specialization = specialization;
-		this.experience = experience;
-	}
-
-	public long getId() {
-	return id;
-    }
-
-    public void setId(long id) {
-	this.id = id;
-    }
 
     public int getAge() {
-	return age;
+        return age;
     }
 
-    public void setAge(int age) {
-	this.age = age;
-    }
 
     public String getAddress() {
-	return address;
+        return address;
     }
 
-    public void setAddress(String address) {
-	this.address = address;
-    }
 
     public String getEmail() {
-	return email;
+        return email;
     }
 
-    public void setEmail(String email) {
-	this.email = email;
-    }
 
     public String getPhoneNumber() {
-	return phoneNumber;
+        return phoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-	this.phoneNumber = phoneNumber;
-    }
 
     public LocalDate getBirthDay() {
-	return birthDay;
+        return birthDay;
     }
 
-    public void setBirthDay(LocalDate birthDate) {
-	this.birthDay = birthDate;
-    }
 
     public String getName() {
-	return name;
+        return name;
     }
 
-    public void setName(String name) {
-	this.name = name;
-    }
 
     public String getSpecialization() {
-	return specialization;
+        return specialization;
     }
 
-    public void setSpecialization(String specialization) {
-	this.specialization = specialization;
-    }
 
     public List<Experience> getExperience() {
-	return experience;
+        return experience;
     }
 
-    public void setExperience(List<Experience> experience) {
-	this.experience.addAll(experience);
+
+    public static class Builder {
+        private Person newPerson;
+
+        public Builder() {
+            newPerson = new Person();
+        }
+
+        public Builder withId(Long id) {
+            newPerson.id = id;
+            return this;
+        }
+
+        public Builder withName(String name) {
+            newPerson.name = name;
+            return this;
+        }
+
+        public Builder withAge(int age) {
+            newPerson.age = age;
+            return this;
+        }
+
+        public Builder withBirthDay(LocalDate birthDay) {
+            newPerson.birthDay = birthDay;
+            return this;
+        }
+
+        public Builder withAddress(String address) {
+            newPerson.address = address;
+            return this;
+        }
+
+        public Builder withEmail(String email) {
+            newPerson.email = email;
+            return this;
+        }
+
+        public Builder withPhoneNumber(String phoneNumber) {
+            newPerson.phoneNumber = phoneNumber;
+            return this;
+        }
+
+        public Builder withSpecialization(String specialization) {
+            newPerson.specialization = specialization;
+            return this;
+        }
+
+        public Builder withExperience(List<Experience> experiences) {
+            newPerson.experience.addAll(experiences);
+            return this;
+        }
+
+        public Person build() {
+            return newPerson;
+        }
     }
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		Person person = (Person) o;
-		return id == person.id &&
-				age == person.age &&
-				Objects.equals(name, person.name) &&
-				Objects.equals(birthDay, person.birthDay) &&
-				Objects.equals(address, person.address) &&
-				Objects.equals(email, person.email) &&
-				Objects.equals(phoneNumber, person.phoneNumber) &&
-				Objects.equals(specialization, person.specialization) &&
-				Objects.equals(experience, person.experience);
-	}
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Person person = (Person) o;
+        return id == person.id &&
+                age == person.age &&
+                Objects.equals(name, person.name) &&
+                Objects.equals(birthDay, person.birthDay) &&
+                Objects.equals(address, person.address) &&
+                Objects.equals(email, person.email) &&
+                Objects.equals(phoneNumber, person.phoneNumber) &&
+                Objects.equals(specialization, person.specialization) &&
+                Objects.equals(experience, person.experience);
+    }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(id, name, birthDay, age, address, email, phoneNumber, specialization, experience);
-	}
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, birthDay, age, address, email, phoneNumber, specialization, experience);
+    }
 
-	@Override
-	public String toString() {
-		return "Person{" +
-				"id=" + id +
-				", name='" + name + '\'' +
-				", birthDay=" + birthDay +
-				", age=" + age +
-				", address='" + address + '\'' +
-				", email='" + email + '\'' +
-				", phoneNumber='" + phoneNumber + '\'' +
-				", specialization='" + specialization + '\'' +
-				", experience=" + experience +
-				'}';
-	}
+    @Override
+    public String toString() {
+        return "Person{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", birthDay=" + birthDay +
+                ", age=" + age +
+                ", address='" + address + '\'' +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", specialization='" + specialization + '\'' +
+                ", experience=" + experience +
+                '}';
+    }
 }
