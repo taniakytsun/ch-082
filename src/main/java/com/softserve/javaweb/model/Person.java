@@ -1,5 +1,6 @@
 package com.softserve.javaweb.model;
 
+import java.awt.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,8 +14,8 @@ import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.softserve.javaweb.service.LocalDateDeserializer;
-import com.softserve.javaweb.service.LocalDateSerializer;
+import com.softserve.javaweb.parser.LocalDateDeserializer;
+import com.softserve.javaweb.parser.LocalDateSerializer;
 
 
 @Valid
@@ -36,10 +37,15 @@ public class Person {
 
     @Email(message = "Invalid email format")
     private String email;
+
     @Pattern(regexp = "\\d{10}|(?:\\d{3}-){2}\\d{4}|\\(\\d{3}\\)\\d{3}-?\\d{4}", message = "Invalid phone number")
     private String phoneNumber;
+
     private String specialization;
+
     private List<Experience> experience = new ArrayList<>();
+
+    private String photoSrc;
 
     private Person() {
 
@@ -47,9 +53,14 @@ public class Person {
 
 
     public long getId() {
+
         return id;
+
     }
 
+    public String getPhotoSrc() {
+        return photoSrc;
+    }
 
     public int getAge() {
         return age;
@@ -140,6 +151,11 @@ public class Person {
 
         public Builder withExperience(List<Experience> experiences) {
             newPerson.experience.addAll(experiences);
+            return this;
+        }
+
+        public Builder withPhoto(String photo) {
+            newPerson.photoSrc =  photo;
             return this;
         }
 

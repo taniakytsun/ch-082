@@ -2,6 +2,7 @@
 /.idea/
 /out/
 /bin/
+/metro-4.2.39/
 /build/
 # Compiled class file
 *.class
