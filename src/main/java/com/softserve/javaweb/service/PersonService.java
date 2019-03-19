@@ -26,7 +26,6 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.softserve.javaweb.model.Experience;
 import com.softserve.javaweb.model.Person;
 
-import com.softserve.javaweb.dao.PersonDAO;
 
 public class PersonService {
 
@@ -90,60 +89,44 @@ public class PersonService {
     public Person parsePersonFromTXT(String fileName) throws IOException, SQLException {
 
         String line = openFile(fileName);
-        String name = null;
-        int age = 0;
-        LocalDate birthDay = null;
-        String address = null;
-        String email = null;
-        String phoneNumber = null;
-        String specialization = null;
-        List<Experience> experiences = new ArrayList<>();
 
+        Person.Builder builder = new Person.Builder();
         while (line != null) {
             if (line.contains("name:")) {
-                name = line.substring(line.indexOf(':') + 2);
+                builder.withName(line.substring(line.indexOf(':') + 2));
                 line = br.readLine();
             }
             if (line.contains("age:")) {
-                age = Integer.parseInt(line.substring(line.indexOf(':') + 2));
+                builder.withAge(Integer.parseInt(line.substring(line.indexOf(':') + 2)));
                 line = br.readLine();
             }
             if (line.contains("birthDay:")) {
-                birthDay = LocalDate.parse(line.substring(line.indexOf(':') + 2));
+                builder.withBirthDay(LocalDate.parse(line.substring(line.indexOf(':') + 2)));
                 line = br.readLine();
             }
             if (line.contains("address:")) {
-                address = line.substring(line.indexOf(':') + 2);
+                builder.withAddress(line.substring(line.indexOf(':') + 2));
                 line = br.readLine();
             }
             if (line.contains("email:")) {
-                email = line.substring(line.indexOf(':') + 2);
+                builder.withEmail(line.substring(line.indexOf(':') + 2));
                 line = br.readLine();
             }
             if (line.contains("phoneNumber:")) {
-                phoneNumber = line.substring(line.indexOf(':') + 2);
+                builder.withPhoneNumber(line.substring(line.indexOf(':') + 2));
                 line = br.readLine();
             }
             if (line.contains("specialization:")) {
-                specialization = line.substring(line.indexOf(':') + 2);
+                builder.withSpecialization(line.substring(line.indexOf(':') + 2));
                 line = br.readLine();
             }else
                 break;
         }
         if ((line!=null) &&(line.contains("experience"))) {
             line = br.readLine();
-            experiences = parseExperienceFromTXT(line);
+            builder.withExperience(parseExperienceFromTXT(line));
         }
-        Person person = new Person.Builder()
-                .withName(name)
-                .withAge(age)
-                .withBirthDay(birthDay)
-                .withAddress(address)
-                .withEmail(email)
-                .withPhoneNumber(phoneNumber)
-                .withSpecialization(specialization)
-                .withExperience(experiences)
-                .build();
+        Person person = builder.build();
         return person;
     }
 
