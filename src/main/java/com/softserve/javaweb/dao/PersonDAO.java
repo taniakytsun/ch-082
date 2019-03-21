@@ -16,7 +16,7 @@ public class PersonDAO implements DAO<Person> {
 
     private static Logger logger = Logger.getLogger(PersonDAO.class.getName());
 
-    DataBaseConnection connection = DataBaseConnection.getInstance();
+    private DataBaseConnection connection = DataBaseConnection.getInstance();
 
     ExperienceDAO experienceDAO = new ExperienceDAO();
 
@@ -41,7 +41,6 @@ public class PersonDAO implements DAO<Person> {
     private static String getAllPersons = "SELECT * FROM person";
 
     public void create(Person person) {
-
         int result = 0;
         try (PreparedStatement preparedStatement = connection.getConnection().prepareStatement(addPerson)) {
 
@@ -61,7 +60,6 @@ public class PersonDAO implements DAO<Person> {
     }
 
     public List<Person> readAll() {
-
         List<Person> persons = new LinkedList<>();
         try (PreparedStatement preparedStatement = connection.getConnection().prepareStatement(getAllPersons);
              ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -77,7 +75,6 @@ public class PersonDAO implements DAO<Person> {
     }
 
     public Person readOneLikeName(String name) {
-
         Person person = new Person.Builder().build();
         try (PreparedStatement preparedStatement = connection.getConnection().prepareStatement(getPersonLikeName)) {
             preparedStatement.setString(1, name);
@@ -94,7 +91,6 @@ public class PersonDAO implements DAO<Person> {
     }
 
     public List<Person> readAllPersonsWithExperience() {
-
         List<Person> persons = new ArrayList<>();
         List<Experience> experiences = new ArrayList<>();
 
@@ -117,7 +113,6 @@ public class PersonDAO implements DAO<Person> {
 
     @Override
     public Person readOne(Long id) {
-
         Person person = new Person.Builder().build();
         try (PreparedStatement preparedStatement = connection.getConnection().prepareStatement(getPersonById)
         ) {
@@ -135,7 +130,6 @@ public class PersonDAO implements DAO<Person> {
     }
 
     public void update(Person person) {
-
         int result = 0;
         try (PreparedStatement preparedStatement = connection.getConnection().prepareStatement(updatePerson)) {
             preparedStatement.setString(1, person.getName());
@@ -152,7 +146,6 @@ public class PersonDAO implements DAO<Person> {
     }
 
     public boolean delete(Long id) {
-
         int deleted = 0;
         experienceDAO.deleteAllByPersonId(id);
         try (PreparedStatement preparedStatement = connection.getConnection().prepareStatement(deletePersonById)) {
@@ -167,7 +160,6 @@ public class PersonDAO implements DAO<Person> {
     }
 
     private Person.Builder getBuilderFromResultSet(ResultSet rs) {
-
         Person.Builder builder = new Person.Builder();
         try {
             builder.withName(rs.getString("name"))
@@ -185,7 +177,6 @@ public class PersonDAO implements DAO<Person> {
     }
 
     private String response(int result) {
-
         if (result > 0) {
             return "Successfully!";
         } else

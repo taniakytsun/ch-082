@@ -15,7 +15,7 @@ public class ExperienceDAO implements DAO<Experience> {
 
     private static Logger logger = Logger.getLogger(PersonDAO.class.getName());
 
-    DataBaseConnection connection = DataBaseConnection.getInstance();
+    private DataBaseConnection connection = DataBaseConnection.getInstance();
 
     private static String createExperience = "INSERT INTO experience (place, datefrom, dateto)" +
             "VALUES (?, ?, ?)";
