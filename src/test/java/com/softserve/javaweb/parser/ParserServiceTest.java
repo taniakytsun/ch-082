@@ -1,4 +1,4 @@
-package com.softserve.javaweb.service;
+package com.softserve.javaweb.parser;
 
 import com.softserve.javaweb.model.Experience;
 import com.softserve.javaweb.model.Person;
@@ -13,9 +13,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PersonServiceTest {
+public class ParserServiceTest {
 
-    PersonService personService = new PersonService();
+    ParserService parserService = new ParserService();
 
     @DataProvider(name = "addListOfPersons")
     public Object[] addListOfPersons() {
@@ -89,37 +89,39 @@ public class PersonServiceTest {
 
     @Test(dataProvider = "getNewFullPerson")
     public void testParseJSONFullObjectAndAssertEquals(Person expectedPerson) throws SQLException {
-        Person person = personService.parsePersonFromJSON("src//test//resources//person.json");
+        Person person = parserService.parsePersonFromJSON("src//test//resources//person.json");
         Assert.assertEquals(person, expectedPerson);
     }
 
     @Test(dataProvider = "getNewPersonWithoutExperience")
     public void testParseJSONObjectWithNullValuesAndAssertEquals(Person expectedPerson) throws SQLException {
-        Person person = personService.parsePersonFromJSON("src//test//resources//personWithoutExp.json");
+        Person person = parserService.parsePersonFromJSON("src//test//resources//personWithoutExp.json");
         Assert.assertEquals(person, expectedPerson);
     }
 
     @Test(dataProvider = "getNewFullPerson")
     public void testParseXMLFullObjectAndAssertEquals(Person expectedPerson) throws SQLException {
-        Person person = personService.parsePersonFromXML("src//test//resources//person.xml");
+        Person person = parserService.parsePersonFromXML("src//test//resources//person.xml");
         Assert.assertEquals(person, expectedPerson);
     }
 
     @Test(dataProvider = "getNewPersonWithoutExperience")
     public void testParseXMLObjectWithNullValuesAndAssertEquals(Person expectedPerson) throws SQLException {
-        Person person = personService.parsePersonFromXML("src//test//resources//personWithoutExp.xml");
+        Person person = parserService.parsePersonFromXML("src//test//resources//personWithoutExp.xml");
         Assert.assertEquals(person, expectedPerson);
     }
 
     @Test(dataProvider = "getNewFullPerson")
     public void testParseTXTAndAssertEquals(Person expectedPerson) throws SQLException, IOException {
-        Person person = personService.parsePersonFromTXT("src//test//resources//person.txt");
+        Person.Builder builder = parserService.parsePersonFromTXT("src//test//resources//person.txt");
+        Person person = builder.build();
         Assert.assertEquals(person, expectedPerson);
     }
 
     @Test(dataProvider = "getNewPersonWithoutExperience")
     public void testParseTXTObjWithoutExperienceAssertEquals(Person expectedPerson) throws SQLException, IOException {
-        Person person = personService.parsePersonFromTXT("src//test//resources//personWithoutExp.txt");
+        Person.Builder builder = parserService.parsePersonFromTXT("src//test//resources//personWithoutExp.txt");
+        Person person = builder.build();
         Assert.assertEquals(person, expectedPerson);
     }
 
@@ -155,14 +157,22 @@ public class PersonServiceTest {
         persons.add(person1);
         return persons;
     }
+
     @Test
     public void testExportYaml() throws IOException {
         List<Person> persons = getListOfPersons();
-       personService.exportYaml("src//test//resources//out//persons.yaml", persons);
+        parserService.exportYaml("src//test//resources//out//persons.yaml", persons);
     }
+
+    @Test(dataProvider = "getNewFullPerson")
+    public void parsePersonFromFile(Person expectedPerson) throws SQLException, IOException {
+        Person person = parserService.parseFileToObject("src//test//resources//person.txt");
+        Assert.assertEquals(person, expectedPerson);
+    }
+
 
     @Test
     public void testValidate() {
-//TODO
+        //TODO
     }
 }
