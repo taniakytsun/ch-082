@@ -36,7 +36,20 @@ public class ParserService {
     private ObjectMapper xmlMapper = new ObjectMapper(new XmlFactory());
 
     private static Logger logger = Logger.getLogger(ParserService.class.getName());
+
     BufferedReader br;
+
+    private static String name = "name";
+    private static String age = "age";
+    private static String birthDay = "birthDay";
+    private static String email = "email";
+    private static String address = "address";
+    private static String specialization = "specialization";
+    private static String EXPERIENCE = "experience";
+    private static String phoneNumber = "phoneNumber";
+    private static String PLACE = "place";
+    private static String DATEFROM = "datefrom";
+    private static String DATETO = "dateto";
 
 
     public String openFile(String fileName) throws IOException {
@@ -62,8 +75,9 @@ public class ParserService {
                 person = parsePersonFromXML(fileName);
                 break;
             }
-            if (line.indexOf("name:") != -1) {
-                person = parsePersonFromTXT(fileName);
+            if (line.contains(name)) {
+                Person.Builder builder = parsePersonFromTXT(fileName);
+                person = builder.build();
                 break;
             }
             line = br.readLine();
@@ -72,48 +86,47 @@ public class ParserService {
         return person;
     }
 
-    public Person parsePersonFromTXT(String fileName) throws IOException {
+    public Person.Builder parsePersonFromTXT(String fileName) throws IOException {
 
         String line = openFile(fileName);
 
         Person.Builder builder = new Person.Builder();
         while (line != null) {
-            if (line.contains("name:")) {
+            if (line.contains(name)) {
                 builder.withName(line.substring(line.indexOf(':') + 2));
                 line = br.readLine();
             }
-            if (line.contains("age:")) {
+            if (line.contains(age)) {
                 builder.withAge(Integer.parseInt(line.substring(line.indexOf(':') + 2)));
                 line = br.readLine();
             }
-            if (line.contains("birthDay:")) {
+            if (line.contains(birthDay)) {
                 builder.withBirthDay(LocalDate.parse(line.substring(line.indexOf(':') + 2)));
                 line = br.readLine();
             }
-            if (line.contains("address:")) {
+            if (line.contains(address)) {
                 builder.withAddress(line.substring(line.indexOf(':') + 2));
                 line = br.readLine();
             }
-            if (line.contains("email:")) {
+            if (line.contains(email)) {
                 builder.withEmail(line.substring(line.indexOf(':') + 2));
                 line = br.readLine();
             }
-            if (line.contains("phoneNumber:")) {
+            if (line.contains(phoneNumber)) {
                 builder.withPhoneNumber(line.substring(line.indexOf(':') + 2));
                 line = br.readLine();
             }
-            if (line.contains("specialization:")) {
+            if (line.contains(specialization)) {
                 builder.withSpecialization(line.substring(line.indexOf(':') + 2));
                 line = br.readLine();
             } else
                 break;
         }
-        if ((line != null) && (line.contains("experience"))) {
+        if ((line != null) && (line.contains(EXPERIENCE))) {
             line = br.readLine();
             builder.withExperience(parseExperienceFromTXT(line));
         }
-        Person person = builder.build();
-        return person;
+        return builder;
     }
 
 
@@ -122,18 +135,18 @@ public class ParserService {
 
         while (line != null) {
             Experience experience = new Experience();
-            if (line.contains("experience")) {
+            if (line.contains(EXPERIENCE)) {
                 line = br.readLine();
             }
-            if (line.contains("place:")) {
+            if (line.contains(PLACE)) {
                 experience.setPlace(line.substring(line.indexOf(':') + 2));
                 line = br.readLine();
             }
-            if (line.contains("dateFrom:")) {
+            if (line.contains(DATEFROM)) {
                 experience.setDateFrom(LocalDate.parse(line.substring(line.indexOf(':') + 2)));
                 line = br.readLine();
             }
-            if (line.contains("dateTo:")) {
+            if (line.contains(DATETO)) {
                 experience.setDateTo(LocalDate.parse(line.substring(line.indexOf(':') + 2)));
                 line = br.readLine();
             } else
