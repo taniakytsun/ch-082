@@ -5,8 +5,8 @@ import java.util.Objects;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.softserve.javaweb.service.LocalDateDeserializer;
-import com.softserve.javaweb.service.LocalDateSerializer;
+import com.softserve.javaweb.parser.LocalDateDeserializer;
+import com.softserve.javaweb.parser.LocalDateSerializer;
 
 
 public class Experience {

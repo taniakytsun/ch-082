@@ -1,5 +1,6 @@
 package com.softserve.javaweb.model;
 
+import java.awt.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,8 +14,8 @@ import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.softserve.javaweb.service.LocalDateDeserializer;
-import com.softserve.javaweb.service.LocalDateSerializer;
+import com.softserve.javaweb.parser.LocalDateDeserializer;
+import com.softserve.javaweb.parser.LocalDateSerializer;
 
 
 @Valid
@@ -40,6 +41,7 @@ public class Person {
     private String phoneNumber;
     private String specialization;
     private List<Experience> experience = new ArrayList<>();
+    private Image photo;
 
     private Person() {
 
@@ -47,7 +49,9 @@ public class Person {
 
 
     public long getId() {
+
         return id;
+
     }
 
 
