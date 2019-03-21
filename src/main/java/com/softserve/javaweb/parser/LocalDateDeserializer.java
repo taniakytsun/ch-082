@@ -1,4 +1,4 @@
-package com.softserve.javaweb.service;
+package com.softserve.javaweb.parser;
 
 import java.io.IOException;
 import java.time.LocalDate;
