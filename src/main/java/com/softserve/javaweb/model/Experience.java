@@ -11,88 +11,91 @@ import com.softserve.javaweb.parser.LocalDateSerializer;
 
 public class Experience {
 
-	private Long id;
-	private String place;
-	@JsonDeserialize(using = LocalDateDeserializer.class)
-	@JsonSerialize(using = LocalDateSerializer.class)
-	private LocalDate dateFrom;
-	@JsonDeserialize(using = LocalDateDeserializer.class)
-	@JsonSerialize(using = LocalDateSerializer.class)
-	private LocalDate dateTo;
+    private Long id;
 
-	public Experience() {
-	}
+    private String place;
 
-	public Experience(String place, LocalDate dateFrom, LocalDate dateTo) {
-		this.place = place;
-		this.dateFrom = dateFrom;
-		this.dateTo = dateTo;
-	}
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
+    private LocalDate dateFrom;
 
-	public Experience(Long id) {
-		this.id = id;
-	}
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
+    private LocalDate dateTo;
 
-	public Experience(Long id, String place, LocalDate dateFrom, LocalDate dateTo) {
-		this.id = id;
-		this.place = place;
-		this.dateFrom = dateFrom;
-		this.dateTo = dateTo;
-	}
+    public Experience() {
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public Experience(String place, LocalDate dateFrom, LocalDate dateTo) {
+        this.place = place;
+        this.dateFrom = dateFrom;
+        this.dateTo = dateTo;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public Experience(Long id) {
+        this.id = id;
+    }
 
-	public String getPlace() {
-		return place;
-	}
+    public Experience(Long id, String place, LocalDate dateFrom, LocalDate dateTo) {
+        this.id = id;
+        this.place = place;
+        this.dateFrom = dateFrom;
+        this.dateTo = dateTo;
+    }
 
-	public void setPlace(String place) {
-		this.place = place;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public LocalDate getDateFrom() {
-		return dateFrom;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setDateFrom(LocalDate dateFrom) {
-		this.dateFrom = dateFrom;
-	}
+    public String getPlace() {
+        return place;
+    }
 
-	public LocalDate getDateTo() {
-		return dateTo;
-	}
+    public void setPlace(String place) {
+        this.place = place;
+    }
 
-	public void setDateTo(LocalDate dateTo) {
-		this.dateTo = dateTo;
-	}
+    public LocalDate getDateFrom() {
+        return dateFrom;
+    }
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		Experience that = (Experience) o;
-		return Objects.equals(place, that.place) &&
-				Objects.equals(dateFrom, that.dateFrom) &&
-				Objects.equals(dateTo, that.dateTo);
-	}
+    public void setDateFrom(LocalDate dateFrom) {
+        this.dateFrom = dateFrom;
+    }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(place, dateFrom, dateTo);
-	}
+    public LocalDate getDateTo() {
+        return dateTo;
+    }
 
-	@Override
-	public String toString() {
-		return "Experience{" +
-				"place='" + place + '\'' +
-				", dateFrom=" + dateFrom +
-				", dateTo=" + dateTo +
-				'}';
-	}
+    public void setDateTo(LocalDate dateTo) {
+        this.dateTo = dateTo;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Experience that = (Experience) o;
+        return Objects.equals(place, that.place) &&
+                Objects.equals(dateFrom, that.dateFrom) &&
+                Objects.equals(dateTo, that.dateTo);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(place, dateFrom, dateTo);
+    }
+
+    @Override
+    public String toString() {
+        return "Experience{" +
+                "place='" + place + '\'' +
+                ", dateFrom=" + dateFrom +
+                ", dateTo=" + dateTo +
+                '}';
+    }
 }

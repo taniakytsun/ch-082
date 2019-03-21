@@ -37,10 +37,14 @@ public class Person {
 
     @Email(message = "Invalid email format")
     private String email;
+
     @Pattern(regexp = "\\d{10}|(?:\\d{3}-){2}\\d{4}|\\(\\d{3}\\)\\d{3}-?\\d{4}", message = "Invalid phone number")
     private String phoneNumber;
+
     private String specialization;
+
     private List<Experience> experience = new ArrayList<>();
+
     private Image photo;
 
     private Person() {
