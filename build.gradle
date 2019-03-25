@@ -1,0 +1,26 @@
+plugins {
+    id 'java'
+    id 'war'
+}
+
+group 'com.softserve.javaweb'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'org.testng', name: 'testng', version: '6.14.3'
+    compile group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: '2.9.8'
+    compile group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-xml', version: '2.9.8'
+    compile group: 'org.codehaus.jackson', name: 'jackson-mapper-asl', version: '1.9.13'
+    compile group: 'org.glassfish.main.bean-validator', name: 'bean-validator', version: '5.1.0'
+    compile group: 'org.glassfish', name: 'javax.el', version: '3.0.1-b11'
+    compile group: 'postgresql', name: 'postgresql', version: '9.1-901-1.jdbc4'
+    compile group: 'jstl', name: 'jstl', version: '1.2'
+    compile 'javax.servlet:javax.servlet-api:3.1.0'
+    compile group: 'javax.servlet.jsp.jstl', name: 'jstl-api', version: '1.2'
+}

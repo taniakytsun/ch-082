@@ -1,0 +1,132 @@
+body {
+    background-color: lightblue;
+}
+.card {
+    float: left;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    width: 250px;
+    height: 250px;
+    background: #f1f1f1;
+    margin: 0 15px 15px 0;
+    text-align: center;
+    padding: 10px;
+}
+
+/* On mouse-over, add a deeper shadow */
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* Add some padding inside the card container */
+.container {
+    padding: 2px 16px;
+}
+
+#persons {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#persons td, #persons th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#persons tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#persons tr:hover {
+    background-color: #ddd;
+}
+
+#persons th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #2F4F4F;
+    color: white;
+}
+
+.button {
+    display: inline-block;
+    padding: 15px 25px;
+    font-size: 10px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    background-color: #2f4f4f;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 9px #c8c8c8;
+}
+
+.button:hover {
+    background-color: #06748e
+}
+
+.button:active {
+    background-color: #225d8e;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}
+
+html, body {
+    height: 100%
+}
+
+body {
+    display: grid;
+    font-family: Avenir;
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased
+}
+
+.inp {
+    position: relative;
+    margin: auto;
+    width: 100%;
+    max-width: 280px
+}
+
+.label {
+    position: absolute;
+    top: 16px;
+    left: 0;
+    font-size: 16px;
+    color: #9098A9;
+    font-weight: 500;
+    transform-origin: 0 0;
+    transition: all .2s ease
+}
+
+.border {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    width: 100%;
+    background: #0077FF;
+    transform: scaleX(0);
+    transform-origin: 0 0;
+    transition: all .15s ease
+}
+
+input {
+    -webkit-appearance: none;
+    width: 100%;
+    border: 0;
+    font-family: inherit;
+    padding: 12px 0;
+    height: 48px;
+    font-size: 16px;
+    font-weight: 500;
+    border-bottom: 2px solid #C8CCD4;
+    background: none;
+    border-radius: 0;
+    color: #223254
+}
