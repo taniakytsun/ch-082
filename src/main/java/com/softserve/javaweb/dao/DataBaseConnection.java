@@ -37,12 +37,16 @@ public class DataBaseConnection {
     }
 
     public static DataBaseConnection getInstance() {
-        try {
-            if (instance == null || instance.getConnection().isClosed()) {
-                instance = new DataBaseConnection();
+        if (instance == null) {
+            instance = new DataBaseConnection();
+        } else {
+            try {
+                if (instance.getConnection().isClosed()) {
+                    instance = new DataBaseConnection();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.ALL, e.getMessage());
             }
-        } catch (SQLException e) {
-            logger.log(Level.ALL, e.getMessage());
         }
         return instance;
     }

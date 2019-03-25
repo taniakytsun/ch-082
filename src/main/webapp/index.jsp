@@ -9,18 +9,19 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="en">
 <head>
+  <link href="/css/style.css" rel="stylesheet">
   <meta charset="UTF-8">
-  <title>My super project!</title>
+  <title>Persons</title>
+
 </head>
 <body>
 <!-- header -->
 <div>
-  <h1>Super app!</h1>
+  <h1>Persons</h1>
 </div>
-<h2>Simple Login Web Application using JSP/Servlet</h2>
 
-  <li><a href="list">List</a></li>
   <li><a href="add">Add</a></li>
+<li><a href="home">List</a></li>
 <div>
 </div>
 </body>

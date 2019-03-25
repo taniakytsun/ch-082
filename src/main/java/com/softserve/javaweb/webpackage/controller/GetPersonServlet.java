@@ -1,6 +1,5 @@
-package com.softserve.javaweb.webpackage.servlet;
+package com.softserve.javaweb.webpackage.controller;
 
-import com.softserve.javaweb.dao.PersonDAO;
 import com.softserve.javaweb.model.Person;
 import com.softserve.javaweb.service.PersonService;
 

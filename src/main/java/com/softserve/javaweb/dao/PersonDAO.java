@@ -162,7 +162,8 @@ public class PersonDAO implements DAO<Person> {
     private Person.Builder getBuilderFromResultSet(ResultSet rs) {
         Person.Builder builder = new Person.Builder();
         try {
-            builder.withName(rs.getString("name"))
+            builder.withId(rs.getLong("idperson"))
+                    .withName(rs.getString("name"))
                     .withEmail(rs.getString("email"))
                     .withAge(rs.getInt("age"))
                     .withBirthDay(rs.getDate("birthDay").toLocalDate())

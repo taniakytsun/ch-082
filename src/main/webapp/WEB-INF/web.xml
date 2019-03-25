@@ -6,7 +6,7 @@
 
     <servlet>
         <servlet-name>GetPersonServlet</servlet-name>
-        <servlet-class>com.softserve.javaweb.webpackage.servlet.GetPersonServlet</servlet-class>
+        <servlet-class>com.softserve.javaweb.webpackage.controller.GetPersonServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>GetPersonServlet</servlet-name>
