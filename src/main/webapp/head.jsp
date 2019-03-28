@@ -21,6 +21,7 @@
     <a href="home">Candidates</a>
     <a href="cards">Cards</a>
     <a href="cards">Add candidate</a>
+    <a href="exportpdf">Export</a>
 </div>
 <div id="main">
     <span style="font-size:30px;cursor:pointer" onclick="openNav()">☰ </span>

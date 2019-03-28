@@ -223,3 +223,9 @@ kendo-pdf-document .customer-photo {
     line-height: 32px;
     padding-left: 3px;
 }
+
+.details{
+    height: 300px;
+    width: 400px;
+    float: left;
+}

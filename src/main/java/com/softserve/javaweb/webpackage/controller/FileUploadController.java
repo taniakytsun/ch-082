@@ -102,7 +102,7 @@ public class FileUploadController extends HttpServlet {
                     "There was an error: " + ex.getMessage());
         }
         // redirects client to message page
-        getServletContext().getRequestDispatcher("home.jsp").forward(
+        getServletContext().getRequestDispatcher("/home.jsp").forward(
                 request, response);
     }
 }

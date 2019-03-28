@@ -30,6 +30,9 @@ public class AddUpdatePersonController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("/");
         requestDispatcher.forward(request, response);
+        String personId = request.getParameter("personId");
+        List<Experience> experiences = experienceService.readAllByPersonId(Long.parseLong(personId));
+        request.setAttribute("experiencesByPerson", experiences);
     }
 
     @Override
