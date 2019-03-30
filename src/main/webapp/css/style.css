@@ -29,7 +29,12 @@ body {
 }
 
 .bigdiv{
-    height: 500px;
+     height: 300px;
+     width: 300px;
+     float: left;
+ }
+.bigdiv1{
+    height: 300px;
     width: 300px;
     float: left;
 }
@@ -225,7 +230,7 @@ kendo-pdf-document .customer-photo {
 }
 
 .details{
-    height: 300px;
-    width: 400px;
+    height: 600px;
+    width: 500px;
     float: left;
 }

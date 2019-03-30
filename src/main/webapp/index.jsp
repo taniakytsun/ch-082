@@ -14,7 +14,7 @@
     <link href="<c:url value="/css/style.css"/>" rel="stylesheet">
 </head>
 <body>
-<div> <label class="txt">softserve</label></div>
+<div> <label class="txt">softserve IT Academy</label></div>
 <div> <p class="big">FROM CANDIDATE TO</p>  <p class="big1">ASSOCIATE</p></div>
 </body>
 </html>

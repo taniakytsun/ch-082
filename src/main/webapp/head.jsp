@@ -17,11 +17,9 @@
 <!-- header -->
 <div id="mySidenav" class="sidenav">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-    <a href="login">Login</a>
+    <a href="index">Home</a>
     <a href="home">Candidates</a>
     <a href="cards">Cards</a>
-    <a href="cards">Add candidate</a>
-    <a href="exportpdf">Export</a>
 </div>
 <div id="main">
     <span style="font-size:30px;cursor:pointer" onclick="openNav()">☰ </span>

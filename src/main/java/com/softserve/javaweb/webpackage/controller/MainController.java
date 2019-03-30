@@ -13,7 +13,6 @@ import java.util.List;
 
 @WebServlet("/cards")
 public class MainController extends HttpServlet {
-    private static final long serialVersionUID = 1L;
 
     private PersonService personService = new PersonService();
 

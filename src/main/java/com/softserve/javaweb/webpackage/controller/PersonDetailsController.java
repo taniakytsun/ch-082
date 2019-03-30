@@ -1,4 +1,6 @@
 package com.softserve.javaweb.webpackage.controller;
+
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.softserve.javaweb.model.Experience;
 import com.softserve.javaweb.model.Person;
@@ -13,29 +15,26 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/home")
-public class HomeController extends HttpServlet {
-    private static final long serialVersionUID = 1L;
-
+@WebServlet("/details")
+public class PersonDetailsController extends HttpServlet {
     private PersonService personService = new PersonService();
     private ExperienceService experienceService = new ExperienceService();
     private ObjectMapper mapper = new ObjectMapper();
 
-    public HomeController() {
-        // Do Nothing
-    }
+    public PersonDetailsController(){
 
+    }
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         List<Person> personList = personService.readAll();
         List<Experience> experiences = experienceService.readAll();
 
+        String jsonList = mapper.writeValueAsString(personList);
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(jsonList);
 
-        request.setAttribute("personList", personList);
-        request.setAttribute("experiences", experiences);
-
-        request.getRequestDispatcher("home.jsp").forward(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

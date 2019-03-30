@@ -12,7 +12,7 @@
     <title>Person details</title>
 </head>
 <body>
-<c:url value="/person/register" var="registerUrl"/>
+<c:url value="/details" var="registerUrl"/>
 
 <form action="${registerUrl}" method="post">
     <table>
