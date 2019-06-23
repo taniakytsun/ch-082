@@ -1,0 +1,17 @@
+{  
+   "name":"Tetiana Oleniuk",
+   "birthDay":"1990-02-25",
+   "age":29,
+   "address":"Chernivtsi city, Dobrogo street",
+   "email":"olenyuk@gmail.com",
+   "phoneNumber":"(097)5495651",
+   "specialization":"C++",
+   "experience":[
+      {  
+         "place":"SoftServe",
+         "dateFrom":"2019-06-02",
+         "dateTo":"2019-09-18",
+         "position":"junior"
+      }
+   ]
+}

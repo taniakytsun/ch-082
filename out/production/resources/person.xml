@@ -1,0 +1,2 @@
+
+<Person><name>Kravchuk Oleksandr</name><birthDay>1997-08-25</birthDay><age>22</age><address>Chernivtsi city, Holovna street</address><email>kravckukn@gmail.com</email><phoneNumber>(099)5395054</phoneNumber><specialization>Java</specialization><experience><experience><place>Inventor Soft</place><dateFrom>2018-06-10</dateFrom><dateTo>2019-02-28</dateTo></experience><experience><place>SoftServe </place><dateFrom>2019-06-02</dateFrom><dateTo>2019-09-18</dateTo></experience></experience></Person>
